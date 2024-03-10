@@ -1,5 +1,3 @@
-import { Row } from "@tanstack/react-table";
-
 import { Button } from "~/components/ui/button";
 import { TodoSchema } from "~/data/todo.dto";
 import { Input } from "~/components/ui/input";
@@ -35,6 +33,8 @@ import { Check, ChevronsUpDown } from "lucide-react";
 
 import { labels, priorities, statuses } from "~/data/data";
 
+import { addTask } from "~/routes/todo";
+
 export function TaskForm() {
   const form = useForm<TodoSchema>({
     defaultValues: {
@@ -48,11 +48,13 @@ export function TaskForm() {
 
   function onSubmit(values: TodoSchema) {
     console.log(values);
+    addTask(values);
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      {/*  onSubmit={form.handleSubmit(onSubmit)} */}
+      <form action="/todo" method="post" className="space-y-8">
         <FormField
           control={form.control}
           name="title"
