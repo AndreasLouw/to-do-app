@@ -8,8 +8,7 @@ export const createSupabaseServerClient = ({
   response: Response;
 }) =>
   createServerClient(
-    "https://kdorjywivwzfnyaanfbj.supabase.co",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtkb3JqeXdpdnd6Zm55YWFuZmJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDk3NDk4MDUsImV4cCI6MjAyNTMyNTgwNX0.J1Qcg_1Q7mMvMutPedY0LRI8RmlWs8Dbp2iljMgcudM",
-
+    process.env.SUPABASE_URL!,
+    process.env.SUPABASE_PUBLIC_KEY!,
     { request, response }
   );

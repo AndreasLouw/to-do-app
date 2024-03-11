@@ -32,10 +32,18 @@ import { cn } from "~/lib/utils";
 import { Check, ChevronsUpDown } from "lucide-react";
 
 import { labels, priorities, statuses } from "~/data/data";
+import { useEffect, useRef, useState } from "react";
+import { OutletContext } from "~/types";
+import { useOutletContext } from "@remix-run/react";
 
-import { addTask } from "~/routes/todo";
+interface TaskProps {
+  tasks: TodoSchema[];
+  userEmail: string;
+}
 
-export function TaskForm() {
+// import { addTask } from "~/routes/todo";
+
+export function TaskForm({ tasks: serverTasks, userEmail: email }: TaskProps) {
   const form = useForm<TodoSchema>({
     defaultValues: {
       id: "",
@@ -46,15 +54,33 @@ export function TaskForm() {
     },
   });
 
-  function onSubmit(values: TodoSchema) {
-    console.log(values);
-    addTask(values);
-  }
+  const { supabase } = useOutletContext<OutletContext>();
+  const [tasks, setTasks] = useState(serverTasks);
+
+  // function onSubmit(values: TodoSchema) {
+  //   console.log(values);
+  //   // addTask(values);
+  //   const channel = supabase
+  //     .channel("*")
+  //     .on(
+  //       "postgres_changes",
+  //       { event: "INSERT", schema: "public", table: "tasks" },
+  //       (payload) => {
+  //         const newTask = payload.new as TodoSchema;
+  //         console.log("new task:", newTask);
+  //         if (!tasks.find((task) => task.id === newTask.id)) {
+  //           setTasks([...tasks, newTask]);
+  //         }
+  //       }
+  //     )
+  //     .subscribe();
+
+  //   supabase.removeChannel(channel);
+  // }
 
   return (
     <Form {...form}>
-      {/*  onSubmit={form.handleSubmit(onSubmit)} */}
-      <form action="/todo" method="post" className="space-y-8">
+      <form method="post" className="space-y-8">
         <FormField
           control={form.control}
           name="title"
@@ -64,9 +90,7 @@ export function TaskForm() {
               <FormControl>
                 <Input placeholder="shadcn" {...field} />
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
+              <FormDescription>This is the task.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -127,9 +151,7 @@ export function TaskForm() {
                   </PopoverContent>
                 </Popover>
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
+              <FormDescription>This is the task label.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -190,9 +212,7 @@ export function TaskForm() {
                   </PopoverContent>
                 </Popover>
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
+              <FormDescription>This is the task priority.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -253,9 +273,7 @@ export function TaskForm() {
                   </PopoverContent>
                 </Popover>
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
+              <FormDescription>This is the task status.</FormDescription>
               <FormMessage />
             </FormItem>
           )}

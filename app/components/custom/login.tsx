@@ -1,5 +1,6 @@
 import { useOutletContext } from "@remix-run/react";
 import type { OutletContext } from "~/types";
+import { Button } from "~/components/ui/button";
 
 export const Login = () => {
   const { supabase } = useOutletContext<OutletContext>();
@@ -12,9 +13,9 @@ export const Login = () => {
 
   return (
     <div className="flex h-full w-full items-center justify-center">
-      <button className="btn btn-primary btn-wide" onClick={handleLogin}>
+      <Button className="btn btn-primary btn-wide" onClick={handleLogin}>
         Login
-      </button>
+      </Button>
     </div>
   );
 };

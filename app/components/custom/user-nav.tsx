@@ -9,8 +9,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
+import { OutletContext } from "~/types";
+import { useOutletContext } from "@remix-run/react";
+import { redirect } from "@remix-run/node";
 
 export function UserNav() {
+  const { supabase } = useOutletContext<OutletContext>();
+
+  const handleLogout = () => {
+    supabase.auth.signOut();
+    redirect("/");
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -36,7 +46,7 @@ export function UserNav() {
           <DropdownMenuItem>Settings</DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Log out</DropdownMenuItem>
+        <DropdownMenuItem onClick={handleLogout}>Log out</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

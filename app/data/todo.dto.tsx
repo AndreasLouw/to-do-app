@@ -1,5 +1,5 @@
 export interface TodoSchema {
-  id: string;
+  id?: string;
   title: string;
   status: string;
   label: string;
