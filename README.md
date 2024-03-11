@@ -1,6 +1,20 @@
-# Welcome to Remix!
+# Project Stack
 
 - [Remix Docs](https://remix.run/docs)
+- Supabase
+- Shadcn
+
+## Run
+
+```sh
+npm install
+```
+
+Then
+
+```sh
+npm run build
+```
 
 ## Development
 
